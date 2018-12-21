@@ -55,7 +55,9 @@ class Worker extends BaseObject
                     return;
                 }
                 list($callback, $params) = $job;
-                call_user_func_array($callback, $params);
+                tgo(function () use ($callback, $params) {
+                    call_user_func_array($callback, $params);
+                });
             }
         });
         tgo(function () {
