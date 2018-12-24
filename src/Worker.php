@@ -4,6 +4,7 @@ namespace Mix\Concurrent;
 
 use Mix\Core\BaseObject;
 use Mix\Core\Channel;
+use Mix\Core\Coroutine;
 
 /**
  * Class Worker
@@ -47,7 +48,7 @@ class Worker extends BaseObject
      */
     public function start()
     {
-        tgo(function () {
+        Coroutine::create(function () {
             while (true) {
                 $this->workerPool->push($this->jobChannel);
                 $job = $this->jobChannel->pop();
@@ -55,12 +56,12 @@ class Worker extends BaseObject
                     return;
                 }
                 list($callback, $params) = $job;
-                tgo(function () use ($callback, $params) {
+                Coroutine::create(function () use ($callback, $params) {
                     call_user_func_array($callback, $params);
                 });
             }
         });
-        tgo(function () {
+        Coroutine::create(function () {
             $this->_quit->pop();
             $this->jobChannel->close();
         });
@@ -71,7 +72,7 @@ class Worker extends BaseObject
      */
     public function stop()
     {
-        tgo(function () {
+        Coroutine::create(function () {
             $this->_quit->push('ok');
         });
     }

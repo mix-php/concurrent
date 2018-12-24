@@ -4,6 +4,7 @@ namespace Mix\Concurrent;
 
 use Mix\Core\BaseObject;
 use Mix\Core\Channel;
+use Mix\Core\Coroutine;
 
 /**
  * Class Dispatcher
@@ -76,7 +77,7 @@ class Dispatcher extends BaseObject
      */
     public function dispatch()
     {
-        tgo(function () {
+        Coroutine::create(function () {
             while (true) {
                 $job = $this->jobQueue->pop();
                 if (!$job) {
@@ -86,7 +87,7 @@ class Dispatcher extends BaseObject
                 $jobChannel->push($job);
             }
         });
-        tgo(function () {
+        Coroutine::create(function () {
             $this->_quit->pop();
             foreach ($this->workers as $worker) {
                 $worker->stop();
@@ -100,7 +101,7 @@ class Dispatcher extends BaseObject
      */
     public function stop()
     {
-        tgo(function () {
+        Coroutine::create(function () {
             $this->_quit->push('ok');
         });
     }
