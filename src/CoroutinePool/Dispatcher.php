@@ -1,6 +1,6 @@
 <?php
 
-namespace Mix\Concurrent;
+namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Core\BaseObject;
 use Mix\Core\Channel;
