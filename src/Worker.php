@@ -16,19 +16,19 @@ class Worker extends BaseObject
 
     /**
      * 工作池
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Channel
      */
     public $workerPool;
 
     /**
      * 任务通道
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Channel
      */
     public $jobChannel;
 
     /**
      * 退出
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Channel
      */
     protected $_quit;
 
@@ -73,7 +73,7 @@ class Worker extends BaseObject
     public function stop()
     {
         Coroutine::create(function () {
-            $this->_quit->push('ok');
+            $this->_quit->push(true);
         });
     }
 

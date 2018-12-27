@@ -15,7 +15,7 @@ class Dispatcher extends BaseObject
 {
 
     /**
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Channel
      */
     public $jobQueue;
 
@@ -28,7 +28,7 @@ class Dispatcher extends BaseObject
     /**
      * 工作池
      * 内部数据的是Channel
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Channel
      */
     public $workerPool;
 
@@ -40,7 +40,7 @@ class Dispatcher extends BaseObject
 
     /**
      * 退出
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Channel
      */
     protected $_quit;
 
@@ -102,7 +102,7 @@ class Dispatcher extends BaseObject
     public function stop()
     {
         Coroutine::create(function () {
-            $this->_quit->push('ok');
+            $this->_quit->push(true);
         });
     }
 
