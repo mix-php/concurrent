@@ -2,7 +2,7 @@
 
 namespace Mix\Concurrent\Sync;
 
-use Mix\Core\BaseObject;
+use Mix\Core\DIObject;
 use Mix\Core\Channel;
 
 /**
@@ -10,7 +10,7 @@ use Mix\Core\Channel;
  * @package Mix\Concurrent
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class WaitGroup extends BaseObject
+class WaitGroup extends DIObject
 {
 
     /**
