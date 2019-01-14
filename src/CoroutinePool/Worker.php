@@ -2,7 +2,7 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
-use Mix\Core\DIObject;
+use Mix\Core\BeanObject;
 use Mix\Core\Channel;
 use Mix\Core\Coroutine;
 
@@ -11,7 +11,7 @@ use Mix\Core\Coroutine;
  * @package Mix\Concurrent
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Worker extends DIObject
+class Worker extends BeanObject
 {
 
     /**
