@@ -56,9 +56,7 @@ class Worker extends BeanObject
                     return;
                 }
                 list($callback, $params) = $job;
-                Coroutine::create(function () use ($callback, $params) {
-                    call_user_func_array($callback, $params);
-                });
+                call_user_func_array($callback, $params);
             }
         });
         Coroutine::create(function () {
