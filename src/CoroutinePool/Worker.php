@@ -2,9 +2,9 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
-use Mix\Core\BeanObject;
-use Mix\Core\Channel;
-use Mix\Core\Coroutine;
+use Mix\Core\Bean\BeanObject;
+use Mix\Core\Coroutine\Channel;
+use Mix\Core\Coroutine\Coroutine;
 
 /**
  * Class Worker
@@ -16,19 +16,19 @@ class Worker extends BeanObject
 
     /**
      * 工作池
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     public $workerPool;
 
     /**
      * 任务通道
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     public $jobChannel;
 
     /**
      * 退出
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     protected $_quit;
 

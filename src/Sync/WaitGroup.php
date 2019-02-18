@@ -2,8 +2,8 @@
 
 namespace Mix\Concurrent\Sync;
 
-use Mix\Core\BeanObject;
-use Mix\Core\Channel;
+use Mix\Core\Bean\BeanObject;
+use Mix\Core\Coroutine\Channel;
 
 /**
  * Class WaitGroup
@@ -19,7 +19,7 @@ class WaitGroup extends BeanObject
     protected $_count = 0;
 
     /**
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     protected $_chan;
 

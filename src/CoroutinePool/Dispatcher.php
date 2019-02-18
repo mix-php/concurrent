@@ -2,9 +2,9 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
-use Mix\Core\BeanObject;
-use Mix\Core\Channel;
-use Mix\Core\Coroutine;
+use Mix\Core\Bean\BeanObject;
+use Mix\Core\Coroutine\Channel;
+use Mix\Core\Coroutine\Coroutine;
 
 /**
  * Class Dispatcher
@@ -15,7 +15,7 @@ class Dispatcher extends BeanObject
 {
 
     /**
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     public $jobQueue;
 
@@ -28,7 +28,7 @@ class Dispatcher extends BeanObject
     /**
      * 工作池
      * 内部数据的是Channel
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     public $workerPool;
 
@@ -40,7 +40,7 @@ class Dispatcher extends BeanObject
 
     /**
      * 退出
-     * @var \Mix\Core\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     protected $_quit;
 
