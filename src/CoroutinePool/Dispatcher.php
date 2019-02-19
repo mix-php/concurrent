@@ -97,7 +97,6 @@ class Dispatcher extends BeanObject
                 }
                 $timer->clear();
                 foreach ($this->workers as $worker) {
-                    var_dump('stop');
                     $worker->stop();
                 }
                 $this->jobQueue->close();
