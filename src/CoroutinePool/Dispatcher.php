@@ -5,6 +5,7 @@ namespace Mix\Concurrent\CoroutinePool;
 use Mix\Core\Bean\BeanObject;
 use Mix\Core\Coroutine\Channel;
 use Mix\Core\Coroutine\Coroutine;
+use Mix\Core\Coroutine\Timer;
 
 /**
  * Class Dispatcher
@@ -89,10 +90,18 @@ class Dispatcher extends BeanObject
         });
         Coroutine::create(function () {
             $this->_quit->pop();
-            foreach ($this->workers as $worker) {
-                $worker->stop();
-            }
-            $this->jobQueue->close();
+            $timer = new Timer();
+            $timer->tick(100, function () use ($timer) {
+                if ($this->jobQueue->stats()['queue_num'] > 0) {
+                    return;
+                }
+                $timer->clear();
+                foreach ($this->workers as $worker) {
+                    var_dump('stop');
+                    $worker->stop();
+                }
+                $this->jobQueue->close();
+            });
         });
     }
 
