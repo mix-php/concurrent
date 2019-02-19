@@ -2,16 +2,16 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
-use Mix\Core\Bean\BeanObject;
+use Mix\Core\Bean\AbstractObject;
 use Mix\Core\Coroutine\Channel;
-use Mix\Core\Coroutine\Coroutine;
+use Mix\Core\Coroutine;
 
 /**
  * Class Worker
  * @package Mix\Concurrent
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Worker extends BeanObject
+class Worker extends AbstractObject
 {
 
     /**

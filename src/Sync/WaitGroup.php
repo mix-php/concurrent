@@ -2,7 +2,7 @@
 
 namespace Mix\Concurrent\Sync;
 
-use Mix\Core\Bean\BeanObject;
+use Mix\Core\Bean\AbstractObject;
 use Mix\Core\Coroutine\Channel;
 
 /**
@@ -10,7 +10,7 @@ use Mix\Core\Coroutine\Channel;
  * @package Mix\Concurrent
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class WaitGroup extends BeanObject
+class WaitGroup extends AbstractObject
 {
 
     /**
