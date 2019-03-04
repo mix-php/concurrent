@@ -3,7 +3,7 @@
 namespace Mix\Concurrent\Sync;
 
 use Mix\Core\Bean\AbstractObject;
-use Mix\Core\Coroutine\Channel;
+use Swoole\Coroutine\Channel;
 
 /**
  * Class WaitGroup
@@ -19,7 +19,7 @@ class WaitGroup extends AbstractObject
     protected $_count = 0;
 
     /**
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Swoole\Coroutine\Channel
      */
     protected $_chan;
 
