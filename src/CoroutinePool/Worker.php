@@ -3,7 +3,7 @@
 namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Core\Bean\AbstractObject;
-use Swoole\Coroutine\Channel;
+use Mix\Core\Coroutine\Channel;
 use Mix\Core\Coroutine;
 
 /**
@@ -16,19 +16,19 @@ class Worker extends AbstractObject
 
     /**
      * 工作池
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     public $workerPool;
 
     /**
      * 任务通道
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     public $jobChannel;
 
     /**
      * 退出
-     * @var \Swoole\Coroutine\Channel
+     * @var \Mix\Core\Coroutine\Channel
      */
     protected $_quit;
 
