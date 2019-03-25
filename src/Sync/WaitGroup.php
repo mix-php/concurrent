@@ -24,12 +24,11 @@ class WaitGroup
 
     /**
      * 使用静态方法创建实例
-     * @param mixed ...$args
      * @return $this
      */
-    public static function new(...$args)
+    public static function new()
     {
-        return new static(...$args);
+        return new static();
     }
 
     /**
