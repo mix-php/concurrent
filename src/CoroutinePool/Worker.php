@@ -55,7 +55,8 @@ class Worker extends AbstractObject
                 if (!$job) {
                     return;
                 }
-                list($callback, $params) = $job;
+                $callback = array_shift($job);
+                $params   = $job;
                 call_user_func_array($callback, $params);
             }
         });
