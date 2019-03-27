@@ -7,7 +7,7 @@ use Mix\Core\Coroutine\Channel;
 /**
  * Class WaitGroup
  * @package Mix\Concurrent\Sync
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class WaitGroup
 {

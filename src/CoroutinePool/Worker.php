@@ -9,7 +9,7 @@ use Mix\Core\Coroutine;
 /**
  * Class Worker
  * @package Mix\Concurrent
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Worker extends AbstractObject
 {

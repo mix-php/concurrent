@@ -10,7 +10,7 @@ use Mix\Core\Coroutine;
 /**
  * Class Dispatcher
  * @package Mix\Concurrent
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Dispatcher extends AbstractObject
 {
