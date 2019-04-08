@@ -4,7 +4,7 @@ namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Core\Bean\AbstractObject;
 use Mix\Core\Coroutine\Channel;
-use Mix\Core\Coroutine\Timer;
+use Mix\Core\Timer;
 use Mix\Core\Coroutine;
 
 /**
