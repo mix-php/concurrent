@@ -52,7 +52,7 @@ abstract class AbstractWorker extends AbstractObject
             while (true) {
                 $this->workerPool->push($this->jobChannel);
                 $data = $this->jobChannel->pop();
-                if (!$data) {
+                if ($data === false) {
                     return;
                 }
                 $this->handle($data);

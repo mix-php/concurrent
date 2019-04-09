@@ -84,7 +84,7 @@ class Dispatcher extends AbstractObject
         Coroutine::create(function () {
             while (true) {
                 $data = $this->jobQueue->pop();
-                if (!$data) {
+                if ($data === false) {
                     return;
                 }
                 $jobChannel = $this->workerPool->pop();
