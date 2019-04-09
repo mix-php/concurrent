@@ -7,11 +7,11 @@ use Mix\Core\Coroutine\Channel;
 use Mix\Core\Coroutine;
 
 /**
- * Class Worker
- * @package Mix\Concurrent
+ * Class AbstractWorker
+ * @package Mix\Concurrent\CoroutinePool
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Worker extends AbstractObject
+abstract class AbstractWorker extends AbstractObject
 {
 
     /**
@@ -51,13 +51,11 @@ class Worker extends AbstractObject
         Coroutine::create(function () {
             while (true) {
                 $this->workerPool->push($this->jobChannel);
-                $job = $this->jobChannel->pop();
-                if (!$job) {
+                $data = $this->jobChannel->pop();
+                if (!$data) {
                     return;
                 }
-                $callback = array_shift($job);
-                $params   = $job;
-                call_user_func_array($callback, $params);
+                $this->handle($data);
             }
         });
         Coroutine::create(function () {

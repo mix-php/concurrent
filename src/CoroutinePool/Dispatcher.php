@@ -61,10 +61,13 @@ class Dispatcher extends AbstractObject
     /**
      * 启动
      */
-    public function start()
+    public function start($worker)
     {
+        if (!is_subclass_of($worker, WorkerInterface::class)) {
+            throw new \RuntimeException("{$worker} type is not 'Mix\Concurrent\CoroutinePool\WorkerInterface'");
+        }
         for ($i = 0; $i < $this->maxWorkers; $i++) {
-            $worker          = new Worker([
+            $worker          = new $worker([
                 'workerPool' => $this->workerPool,
             ]);
             $this->workers[] = $worker;
@@ -80,12 +83,12 @@ class Dispatcher extends AbstractObject
     {
         Coroutine::create(function () {
             while (true) {
-                $job = $this->jobQueue->pop();
-                if (!$job) {
+                $data = $this->jobQueue->pop();
+                if (!$data) {
                     return;
                 }
                 $jobChannel = $this->workerPool->pop();
-                $jobChannel->push($job);
+                $jobChannel->push($data);
             }
         });
         Coroutine::create(function () {
