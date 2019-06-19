@@ -4,7 +4,7 @@ namespace Mix\Concurrent;
 
 /**
  * Class Coroutine
- * @package Mix\Core
+ * @package Mix\Concurrent
  * @author liu,jian <coder.keda@gmail.com>
  */
 class Coroutine

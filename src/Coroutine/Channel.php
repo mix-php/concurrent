@@ -4,7 +4,7 @@ namespace Mix\Concurrent\Coroutine;
 
 /**
  * Class Channel
- * @package Mix\Core\Coroutine
+ * @package Mix\Concurrent\Coroutine
  * @author liu,jian <coder.keda@gmail.com>
  *
  * @method bool push($data)
@@ -14,7 +14,6 @@ namespace Mix\Concurrent\Coroutine;
  * @method array stats()
  * @method int length()
  * @method close()
- */
 class Channel extends \Swoole\Coroutine\Channel
 {
 
