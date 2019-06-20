@@ -2,7 +2,7 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
-use Mix\Core\Bean\AbstractObject;
+use Mix\Bean\Object\AbstractObject;
 use Mix\Core\Coroutine\Channel;
 use Mix\Core\Coroutine;
 
