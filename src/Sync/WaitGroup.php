@@ -2,7 +2,7 @@
 
 namespace Mix\Concurrent\Sync;
 
-use Mix\Core\Coroutine\Channel;
+use Mix\Concurrent\Coroutine\Channel;
 
 /**
  * Class WaitGroup
@@ -18,7 +18,7 @@ class WaitGroup
     protected $_count = 0;
 
     /**
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     protected $_chan;
 

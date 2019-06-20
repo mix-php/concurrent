@@ -3,9 +3,9 @@
 namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Bean\Object\AbstractObject;
-use Mix\Core\Coroutine\Channel;
+use Mix\Concurrent\Coroutine\Channel;
 use Mix\Core\Timer;
-use Mix\Core\Coroutine;
+use Mix\Concurrent\Coroutine;
 
 /**
  * Class Dispatcher
@@ -16,7 +16,7 @@ class Dispatcher extends AbstractObject
 {
 
     /**
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     public $jobQueue;
 
@@ -29,7 +29,7 @@ class Dispatcher extends AbstractObject
     /**
      * 工作池
      * 内部数据的是Channel
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     public $workerPool;
 
@@ -41,7 +41,7 @@ class Dispatcher extends AbstractObject
 
     /**
      * 退出
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     protected $_quit;
 

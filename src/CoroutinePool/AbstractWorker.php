@@ -3,8 +3,8 @@
 namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Bean\Object\AbstractObject;
-use Mix\Core\Coroutine\Channel;
-use Mix\Core\Coroutine;
+use Mix\Concurrent\Coroutine\Channel;
+use Mix\Concurrent\Coroutine;
 
 /**
  * Class AbstractWorker
@@ -16,19 +16,19 @@ abstract class AbstractWorker extends AbstractObject
 
     /**
      * 工作池
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     public $workerPool;
 
     /**
      * 任务通道
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     public $jobChannel;
 
     /**
      * 退出
-     * @var \Mix\Core\Coroutine\Channel
+     * @var \Mix\Concurrent\Coroutine\Channel
      */
     protected $_quit;
 

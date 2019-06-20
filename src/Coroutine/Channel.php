@@ -14,6 +14,7 @@ namespace Mix\Concurrent\Coroutine;
  * @method array stats()
  * @method int length()
  * @method close()
+ */
 class Channel extends \Swoole\Coroutine\Channel
 {
 
