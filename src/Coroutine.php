@@ -117,7 +117,7 @@ class Coroutine
                     throw $e;
                 }
                 // Mix错误处理
-                \Mix::$app->error->handleException($e);
+                \Mix::$console->error->handleException($e);
             } finally {
                 // 清理协程资源
                 unset(static::$idMap[$id]);
@@ -125,9 +125,9 @@ class Coroutine
                 // 清除协程
                 if (static::$tidCount[$tid] == 0) {
                     unset(static::$tidCount[$tid]);
-                    // Mix容器处理
+                    // Mix组件处理
                     if ($isMix) {
-                        \Mix::$app->container->delete($tid);
+                        \Mix::$console->components->delete($tid);
                     }
                 }
             }
