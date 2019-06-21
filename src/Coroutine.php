@@ -1,6 +1,7 @@
 <?php
 
 namespace Mix\Concurrent;
+
 use Mix\Console\Error;
 
 /**
