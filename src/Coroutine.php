@@ -14,13 +14,13 @@ class Coroutine
      * id映射
      * @var array
      */
-    private static $idMap = [];
+    protected static $idMap = [];
 
     /**
      * tid计数
      * @var array
      */
-    private static $tidCount = [];
+    protected static $tidCount = [];
 
     /**
      * 获取协程id
@@ -41,8 +41,8 @@ class Coroutine
      */
     public static function tid()
     {
-        $id = self::id();
-        return self::$idMap[$id] ?? $id;
+        $id = static::id();
+        return static::$idMap[$id] ?? $id;
     }
 
     /**
@@ -84,8 +84,8 @@ class Coroutine
      */
     public static function create(callable $function, ...$params)
     {
-        $tid = self::tid();
-        $top = $tid == self::id();
+        $tid = static::tid();
+        $top = $tid == static::id();
         static::go($function, $params, $tid, $top);
     }
 
@@ -98,29 +98,37 @@ class Coroutine
      */
     public static function go($function, $params, $tid, $top)
     {
-        go(function () use ($function, $params, $tid, $top) {
+        $isMix = class_exists(\Mix::class);
+        go(function () use ($function, $params, $tid, $top, $isMix) {
             // 记录协程id关系
-            $id = self::id();
+            $id = static::id();
             if ($top && $tid == -1) {
                 $tid = $id;
             }
-            self::$idMap[$id]     = $tid;
-            self::$tidCount[$tid] = self::$tidCount[$tid] ?? 0;
-            self::$tidCount[$tid]++;
+            static::$idMap[$id]     = $tid;
+            static::$tidCount[$tid] = static::$tidCount[$tid] ?? 0;
+            static::$tidCount[$tid]++;
             // 执行闭包
             try {
                 call_user_func_array($function, $params);
             } catch (\Throwable $e) {
-                // 输出错误
+                // 错误处理
+                if (!$isMix) {
+                    throw $e;
+                }
+                // Mix错误处理
                 \Mix::$app->error->handleException($e);
             } finally {
                 // 清理协程资源
-                unset(self::$idMap[$id]);
-                self::$tidCount[$tid]--;
+                unset(static::$idMap[$id]);
+                static::$tidCount[$tid]--;
                 // 清除协程
-                if (self::$tidCount[$tid] == 0) {
-                    unset(self::$tidCount[$tid]);
-                    \Mix::$app->container->delete($tid);
+                if (static::$tidCount[$tid] == 0) {
+                    unset(static::$tidCount[$tid]);
+                    // Mix容器处理
+                    if ($isMix) {
+                        \Mix::$app->container->delete($tid);
+                    }
                 }
             }
         });
