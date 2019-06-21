@@ -1,6 +1,7 @@
 <?php
 
 namespace Mix\Concurrent;
+use Mix\Console\Error;
 
 /**
  * Class Coroutine
@@ -117,7 +118,9 @@ class Coroutine
                     throw $e;
                 }
                 // Mix错误处理
-                \Mix::$console->error->handleException($e);
+                /** @var Error $error */
+                $error = \Mix::$console->get('error');
+                $error->handleException($e);
             } finally {
                 // 清理协程资源
                 unset(static::$idMap[$id]);
