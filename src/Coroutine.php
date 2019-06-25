@@ -40,22 +40,13 @@ class Coroutine
     }
 
     /**
-     * 禁用内置协程
+     * 协程设置
+     * @param array $config
+     * @return mixed
      */
-    public static function disableBuiltin()
+    public static function set(array $config)
     {
-        // 兼容非 Swoole Console
-        if (!function_exists('swoole_async_set')) {
-            return;
-        }
-        // 禁用
-        static $trigger = false;
-        if (!$trigger) {
-            swoole_async_set([
-                'enable_coroutine' => false,
-            ]);
-            $trigger = true;
-        }
+        return swoole_async_set($config);
     }
 
     /**
