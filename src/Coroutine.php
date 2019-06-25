@@ -70,8 +70,9 @@ class Coroutine
             try {
                 call_user_func_array($function, $params);
             } catch (\Throwable $e) {
+                $isMix = class_exists(\Mix::class);
                 // 错误处理
-                if (!class_exists(\Mix::class)) {
+                if (!$isMix) {
                     throw $e;
                 }
                 // Mix错误处理
