@@ -2,6 +2,7 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
+use Mix\Bean\BeanInjector;
 use Mix\Concurrent\Coroutine\Channel;
 use Mix\Concurrent\Timer;
 use Mix\Concurrent\Coroutine;
@@ -47,9 +48,17 @@ class Dispatcher
     /**
      * Dispatcher constructor.
      */
-    public function __construct()
+    public function __construct(array $config)
     {
-        // 初始化
+        BeanInjector::inject($this, $config);
+        $this->init();
+    }
+
+    /**
+     * 初始化
+     */
+    public function init()
+    {
         if (!isset($this->workerPool)) {
             $this->workerPool = new Channel($this->maxWorkers);
         }
