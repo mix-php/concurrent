@@ -18,7 +18,7 @@ class WaitGroup
     protected $_count = 0;
 
     /**
-     * @var \Mix\Concurrent\Coroutine\Channel
+     * @var Channel
      */
     protected $_chan;
 

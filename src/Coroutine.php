@@ -13,38 +13,21 @@ class Coroutine
 {
 
     /**
-     * id映射
-     * @var array
-     */
-    protected static $idMap = [];
-
-    /**
-     * tid计数
-     * @var array
-     */
-    protected static $tidCount = [];
-
-    /**
      * 获取协程id
      * @return int
      */
     public static function id()
     {
-        $id = -1;
-        if (!class_exists('\Swoole\Coroutine')) {
-            return $id;
-        }
-        return \Swoole\Coroutine::getuid();
+        return \Swoole\Coroutine::getCid();
     }
 
     /**
-     * 获取顶部协程id
+     * 获取父协程id
      * @return int
      */
-    public static function tid()
+    public static function pid()
     {
-        $id = static::id();
-        return static::$idMap[$id] ?? $id;
+        return \Swoole\Coroutine::getPcid();
     }
 
     /**
@@ -53,11 +36,7 @@ class Coroutine
      */
     public static function enableHook(int $flags = SWOOLE_HOOK_ALL)
     {
-        static $trigger = false;
-        if (!$trigger) {
-            \Swoole\Runtime::enableCoroutine(true, $flags); // Swoole >= 4.1.0
-            $trigger = true;
-        }
+        \Swoole\Runtime::enableCoroutine(true, $flags); // Swoole >= 4.1.0
     }
 
     /**
@@ -86,54 +65,19 @@ class Coroutine
      */
     public static function create(callable $function, ...$params)
     {
-        $tid = static::tid();
-        $top = $tid == static::id();
-        static::go($function, $params, $tid, $top);
-    }
-
-    /**
-     * 创建协程 (手动)
-     * @param $function
-     * @param $params
-     * @param $tid
-     * @param $top
-     */
-    public static function go($function, $params, $tid, $top)
-    {
-        $isMix = class_exists(\Mix::class);
-        go(function () use ($function, $params, $tid, $top, $isMix) {
-            // 记录协程id关系
-            $id = static::id();
-            if ($top && $tid == -1) {
-                $tid = $id;
-            }
-            static::$idMap[$id]     = $tid;
-            static::$tidCount[$tid] = static::$tidCount[$tid] ?? 0;
-            static::$tidCount[$tid]++;
+        go(function () use ($function, $params) {
             // 执行闭包
             try {
                 call_user_func_array($function, $params);
             } catch (\Throwable $e) {
                 // 错误处理
-                if (!$isMix) {
+                if (!class_exists(\Mix::class)) {
                     throw $e;
                 }
                 // Mix错误处理
                 /** @var Error $error */
-                $error = \Mix::$console->get('error');
+                $error = \Mix::$app->get('error');
                 $error->handleException($e);
-            } finally {
-                // 清理协程资源
-                unset(static::$idMap[$id]);
-                static::$tidCount[$tid]--;
-                // 清除协程
-                if (static::$tidCount[$tid] == 0) {
-                    unset(static::$tidCount[$tid]);
-                    // Mix组件处理
-                    if ($isMix) {
-                        \Mix::$console->components->delete($tid);
-                    }
-                }
             }
         });
     }
