@@ -37,13 +37,10 @@ class Timer
     {
         // 清除旧定时器
         $this->clear();
-        // 外部获取协程id
-        $tid = Coroutine::tid();
-        $top = $tid == Coroutine::id();
         // 设置定时器
-        $timerId = \Swoole\Timer::after($msec, function () use ($callback, $tid, $top) {
+        $timerId = \Swoole\Timer::after($msec, function () use ($callback) {
             // 创建协程
-            Coroutine::go($callback, [], $tid, $top);
+            Coroutine::create($callback);
         });
         // 保存id
         $this->_timerId = $timerId;
@@ -62,13 +59,10 @@ class Timer
     {
         // 清除旧定时器
         $this->clear();
-        // 外部获取协程id
-        $tid = Coroutine::tid();
-        $top = $tid == Coroutine::id();
         // 设置定时器
-        $timerId = \Swoole\Timer::tick($msec, function () use ($callback, $tid, $top) {
+        $timerId = \Swoole\Timer::tick($msec, function () use ($callback) {
             // 创建协程
-            Coroutine::go($callback, [], $tid, $top);
+            Coroutine::create($callback);
         });
         // 保存id
         $this->_timerId = $timerId;

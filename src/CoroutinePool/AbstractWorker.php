@@ -2,6 +2,7 @@
 
 namespace Mix\Concurrent\CoroutinePool;
 
+use Mix\Bean\BeanInjector;
 use Mix\Concurrent\Coroutine\Channel;
 use Mix\Concurrent\Coroutine;
 
@@ -33,10 +34,19 @@ abstract class AbstractWorker
 
     /**
      * AbstractWorker constructor.
+     * @param array $config
      */
-    public function __construct()
+    public function __construct(array $config)
     {
-        // 初始化
+        BeanInjector::inject($this, $config);
+        $this->init();
+    }
+
+    /**
+     * 初始化
+     */
+    public function init()
+    {
         $this->jobChannel = new Channel();
         $this->_quit      = new Channel();
     }

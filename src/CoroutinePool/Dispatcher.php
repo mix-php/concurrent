@@ -47,6 +47,9 @@ class Dispatcher
 
     /**
      * Dispatcher constructor.
+     * @param array $config
+     * @throws \PhpDocReader\AnnotationException
+     * @throws \ReflectionException
      */
     public function __construct(array $config)
     {
