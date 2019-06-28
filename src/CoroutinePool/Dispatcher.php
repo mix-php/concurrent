@@ -4,6 +4,7 @@ namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Bean\BeanInjector;
 use Mix\Concurrent\Coroutine\Channel;
+use Mix\Concurrent\Exception\TypeException;
 use Mix\Concurrent\Timer;
 use Mix\Concurrent\Coroutine;
 
@@ -74,7 +75,7 @@ class Dispatcher
     public function start($worker)
     {
         if (!is_subclass_of($worker, WorkerInterface::class)) {
-            throw new \RuntimeException("{$worker} type is not '" . WorkerInterface::class . "'");
+            throw new TypeException("{$worker} type is not '" . WorkerInterface::class . "'");
         }
         for ($i = 0; $i < $this->maxWorkers; $i++) {
             /** @var AbstractWorker $worker */
