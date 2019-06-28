@@ -74,7 +74,7 @@ class Dispatcher
     public function start($worker)
     {
         if (!is_subclass_of($worker, WorkerInterface::class)) {
-            throw new \RuntimeException("{$worker} type is not 'Mix\Concurrent\CoroutinePool\WorkerInterface'");
+            throw new \RuntimeException("{$worker} type is not '" . WorkerInterface::class . "'");
         }
         for ($i = 0; $i < $this->maxWorkers; $i++) {
             /** @var AbstractWorker $worker */
