@@ -2,8 +2,6 @@
 
 namespace Mix\Concurrent;
 
-use Mix\Console\Error;
-
 /**
  * Class Coroutine
  * @package Mix\Concurrent
@@ -61,13 +59,13 @@ class Coroutine
             try {
                 call_user_func_array($function, $params);
             } catch (\Throwable $e) {
-                $isMix = class_exists(\Mix::class);
+                $isMix = class_exists(\Mix::class) && class_exists(\Mix\Console\Error::class);
                 // 错误处理
                 if (!$isMix) {
                     throw $e;
                 }
                 // Mix错误处理
-                /** @var Error $error */
+                /** @var \Mix\Console\Error $error */
                 $error = \Mix::$app->get('error');
                 $error->handleException($e);
             }
