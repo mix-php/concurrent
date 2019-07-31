@@ -48,15 +48,15 @@ class Coroutine
     }
 
     /**
-     * 创建协程 (自动)
+     * 创建协程
      * @param callable $function
      * @param mixed ...$params
      */
     public static function create(callable $function, ...$params)
     {
         go(function () use ($function, $params) {
-            // 执行闭包
             try {
+                // 执行闭包
                 call_user_func_array($function, $params);
             } catch (\Throwable $e) {
                 $isMix = class_exists(\Mix::class);
