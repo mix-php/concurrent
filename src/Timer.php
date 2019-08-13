@@ -39,8 +39,25 @@ class Timer
         $this->clear();
         // 设置定时器
         $timerId = \Swoole\Timer::after($msec, function () use ($callback) {
-            // 创建协程
-            Coroutine::create($callback);
+            if (Coroutine::id() == -1) {
+                // 创建协程
+                Coroutine::create($callback);
+            } else {
+                try {
+                    // 执行闭包
+                    call_user_func($callback);
+                } catch (\Throwable $e) {
+                    $isMix = class_exists(\Mix::class);
+                    // 错误处理
+                    if (!$isMix) {
+                        throw $e;
+                    }
+                    // Mix错误处理
+                    /** @var \Mix\Console\Error $error */
+                    $error = \Mix::$app->context->get('error');
+                    $error->handleException($e);
+                }
+            }
         });
         // 保存id
         $this->_timerId = $timerId;
@@ -61,8 +78,25 @@ class Timer
         $this->clear();
         // 设置定时器
         $timerId = \Swoole\Timer::tick($msec, function () use ($callback) {
-            // 创建协程
-            Coroutine::create($callback);
+            if (Coroutine::id() == -1) {
+                // 创建协程
+                Coroutine::create($callback);
+            } else {
+                try {
+                    // 执行闭包
+                    call_user_func($callback);
+                } catch (\Throwable $e) {
+                    $isMix = class_exists(\Mix::class);
+                    // 错误处理
+                    if (!$isMix) {
+                        throw $e;
+                    }
+                    // Mix错误处理
+                    /** @var \Mix\Console\Error $error */
+                    $error = \Mix::$app->context->get('error');
+                    $error->handleException($e);
+                }
+            }
         });
         // 保存id
         $this->_timerId = $timerId;
@@ -71,7 +105,7 @@ class Timer
     }
 
     /**
-     * 清除旧定时器
+     * 清除定时器
      * @return bool
      */
     public function clear()
@@ -80,6 +114,15 @@ class Timer
             return \Swoole\Timer::clear($this->_timerId);
         }
         return false;
+    }
+
+    /**
+     * 清除全部定时器
+     * @return bool
+     */
+    public static function clearAll()
+    {
+        return \Swoole\Timer::clearAll();
     }
 
 }
