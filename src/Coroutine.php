@@ -40,21 +40,21 @@ class Coroutine
     /**
      * 协程设置
      * @param array $config
-     * @return mixed
      */
     public static function set(array $config)
     {
-        return swoole_async_set($config);
+        swoole_async_set($config);
     }
 
     /**
      * 创建协程
      * @param callable $function
      * @param mixed ...$params
+     * @return int|false
      */
     public static function create(callable $function, ...$params)
     {
-        go(function () use ($function, $params) {
+        return \Swoole\Coroutine::create(function () use ($function, $params) {
             try {
                 // 执行闭包
                 call_user_func_array($function, $params);
