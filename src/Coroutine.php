@@ -29,15 +29,6 @@ class Coroutine
     }
 
     /**
-     * 启用协程钩子
-     * @param int $flags
-     */
-    public static function enableHook(int $flags = SWOOLE_HOOK_ALL)
-    {
-        \Swoole\Runtime::enableCoroutine(true, $flags); // Swoole >= 4.1.0
-    }
-
-    /**
      * 协程设置
      * @param array $config
      */
