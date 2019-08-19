@@ -22,6 +22,9 @@
   "autoload": {
     "psr-4": {
       "Mix\\Concurrent\\": "src/"
-    }
+    },
+    "files": [
+      "src/functions.php"
+    ]
   }
 }
