@@ -29,15 +29,6 @@ class Coroutine
     }
 
     /**
-     * 协程设置
-     * @param array $config
-     */
-    public static function set(array $config)
-    {
-        swoole_async_set($config);
-    }
-
-    /**
      * 创建协程
      * @param callable $function
      * @param mixed ...$params
@@ -61,6 +52,15 @@ class Coroutine
                 $error->handleException($e);
             }
         });
+    }
+
+    /**
+     * 创建延迟执行
+     * @param callable $function
+     */
+    public static function defer(callable $function)
+    {
+        return \Swoole\Coroutine::defer($function);
     }
 
 }
