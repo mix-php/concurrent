@@ -2,7 +2,7 @@
 
 namespace Mix\Concurrent\Sync;
 
-use Mix\Concurrent\Coroutine\Channel;
+use Swoole\Coroutine\Channel;
 
 /**
  * Class WaitGroup

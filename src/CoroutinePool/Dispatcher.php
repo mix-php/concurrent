@@ -3,7 +3,7 @@
 namespace Mix\Concurrent\CoroutinePool;
 
 use Mix\Bean\BeanInjector;
-use Mix\Concurrent\Coroutine\Channel;
+use Swoole\Coroutine\Channel;
 use Mix\Concurrent\Exception\TypeException;
 use Mix\Concurrent\Timer;
 use Mix\Concurrent\Coroutine;
