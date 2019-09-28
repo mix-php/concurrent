@@ -11,24 +11,6 @@ class Coroutine
 {
 
     /**
-     * 获取协程id
-     * @return int
-     */
-    public static function id()
-    {
-        return \Swoole\Coroutine::getCid();
-    }
-
-    /**
-     * 获取父协程id
-     * @return int
-     */
-    public static function pid()
-    {
-        return \Swoole\Coroutine::getPcid();
-    }
-
-    /**
      * 创建协程
      * @param callable $function
      * @param mixed ...$params
@@ -55,12 +37,27 @@ class Coroutine
     }
 
     /**
-     * 创建延迟执行
+     * 延迟执行
      * @param callable $function
      */
     public static function defer(callable $function)
     {
-        return \Swoole\Coroutine::defer($function);
+        return \Swoole\Coroutine::defer(function () use ($function) {
+            try {
+                // 执行闭包
+                call_user_func($function);
+            } catch (\Throwable $e) {
+                $isMix = class_exists(\Mix::class);
+                // 错误处理
+                if (!$isMix) {
+                    throw $e;
+                }
+                // Mix错误处理
+                /** @var \Mix\Console\Error $error */
+                $error = \Mix::$app->context->get('error');
+                $error->handleException($e);
+            }
+        });
     }
 
 }

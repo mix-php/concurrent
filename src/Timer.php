@@ -39,7 +39,7 @@ class Timer
         $this->clear();
         // 设置定时器
         $timerId = \Swoole\Timer::after($msec, function () use ($callback) {
-            if (Coroutine::id() == -1) {
+            if (\Swoole\Coroutine::getCid() == -1) {
                 // 创建协程
                 Coroutine::create($callback);
             } else {
@@ -78,7 +78,7 @@ class Timer
         $this->clear();
         // 设置定时器
         $timerId = \Swoole\Timer::tick($msec, function () use ($callback) {
-            if (Coroutine::id() == -1) {
+            if (\Swoole\Coroutine::getCid() == -1) {
                 // 创建协程
                 Coroutine::create($callback);
             } else {
