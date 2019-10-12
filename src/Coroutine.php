@@ -39,6 +39,7 @@ class Coroutine
     /**
      * 延迟执行
      * @param callable $function
+     * @return mixed
      */
     public static function defer(callable $function)
     {
