@@ -12,16 +12,16 @@ class Coroutine
 
     /**
      * 创建协程
-     * @param callable $function
+     * @param callable $callback
      * @param mixed ...$params
      * @return int|false
      */
-    public static function create(callable $function, ...$params)
+    public static function create(callable $callback, ...$params)
     {
-        return \Swoole\Coroutine::create(function () use ($function, $params) {
+        return \Swoole\Coroutine::create(function () use ($callback, $params) {
             try {
                 // 执行闭包
-                call_user_func_array($function, $params);
+                call_user_func_array($callback, $params);
             } catch (\Throwable $e) {
                 $isMix = class_exists(\Mix::class);
                 // 错误处理
@@ -38,15 +38,15 @@ class Coroutine
 
     /**
      * 延迟执行
-     * @param callable $function
-     * @return mixed
+     * @param callable $callback
+     * @return void
      */
-    public static function defer(callable $function)
+    public static function defer(callable $callback)
     {
-        return \Swoole\Coroutine::defer(function () use ($function) {
+        \Swoole\Coroutine::defer(function () use ($callback) {
             try {
                 // 执行闭包
-                call_user_func($function);
+                call_user_func($callback);
             } catch (\Throwable $e) {
                 $isMix = class_exists(\Mix::class);
                 // 错误处理
