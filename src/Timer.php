@@ -14,7 +14,7 @@ class Timer
      * 定时器ID
      * @var int
      */
-    protected $_timerId;
+    protected $timerId;
 
     /**
      * 使用静态方法创建实例
@@ -39,7 +39,7 @@ class Timer
         // 清除旧定时器
         $this->clear();
         // 设置定时器
-        $timerId = \Swoole\Timer::after($msec, function (int $timer_id, ...$params) use ($callback) {
+        $timerId = \Swoole\Timer::after($msec, function (...$params) use ($callback) {
             if (\Swoole\Coroutine::getCid() == -1) {
                 // 创建协程
                 Coroutine::create($callback);
@@ -59,9 +59,9 @@ class Timer
                     $error->handleException($e);
                 }
             }
-        }, $params);
+        }, ...$params);
         // 保存id
-        $this->_timerId = $timerId;
+        $this->timerId = $timerId;
         // 返回
         return $timerId;
     }
@@ -79,7 +79,7 @@ class Timer
         // 清除旧定时器
         $this->clear();
         // 设置定时器
-        $timerId = \Swoole\Timer::tick($msec, function (int $timer_id, ...$params) use ($callback) {
+        $timerId = \Swoole\Timer::tick($msec, function (int $timerId, ...$params) use ($callback) {
             if (\Swoole\Coroutine::getCid() == -1) {
                 // 创建协程
                 Coroutine::create($callback);
@@ -99,9 +99,9 @@ class Timer
                     $error->handleException($e);
                 }
             }
-        }, $params);
+        }, ...$params);
         // 保存id
-        $this->_timerId = $timerId;
+        $this->timerId = $timerId;
         // 返回
         return $timerId;
     }
@@ -112,8 +112,8 @@ class Timer
      */
     public function clear()
     {
-        if (isset($this->_timerId)) {
-            return \Swoole\Timer::clear($this->_timerId);
+        if (isset($this->timerId)) {
+            return \Swoole\Timer::clear($this->timerId);
         }
         return false;
     }
